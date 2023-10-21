@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "voice_recorder",
+    "name": "Voice Recorder",
     "slug": "voice_recorder",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,22 +9,27 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#d97706"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ffffff",
+        "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
+      },
+      "package": "com.emmanuellubwama.voice_recorder"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "192d9687-e58f-4190-ab48-395abdf93460"
+      }
     }
   }
 }
