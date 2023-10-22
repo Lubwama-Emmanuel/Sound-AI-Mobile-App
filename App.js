@@ -12,7 +12,8 @@ import Recordings from "./screens/Recordings";
 import IconButton from "./ui/IconButton";
 import { init } from "./utils/database";
 
-// SplashScreen.preventAutoHideAsync();
+// REASON FOR THE APK NOT LOADING
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
