@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import * as SplashScreen from "expo-splash-screen";
 
 import Home from "./screens/Home";
 import { colors } from "./constants/Global";
@@ -12,20 +9,24 @@ import Recordings from "./screens/Recordings";
 import IconButton from "./ui/IconButton";
 import { init } from "./utils/database";
 
-// REASON FOR THE APK NOT LOADING
+import * as SplashScreen from "expo-splash-screen";
+
 SplashScreen.preventAutoHideAsync();
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [isCheckingLoading, setIsCheckingLoading] = useState(true);
+  const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
     async function prepare() {
-      // await init();
-
-      setIsCheckingLoading(false);
+      try {
+        await init();
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        setAppIsReady(true);
+      }
 
       SplashScreen.hideAsync();
     }
@@ -33,33 +34,13 @@ export default function App() {
     prepare();
   }, []);
 
-  if (isCheckingLoading) {
+  if (!appIsReady) {
     return null;
   }
 
   return (
     <>
       <StatusBar style="dark" />
-      {/* <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: colors.primary800,
-            },
-            headerTintColor: colors.primary50,
-            contentStyle: {
-              backgroundColor: colors.primary300,
-            },
-          }}
-        >
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              title: "Home",
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator> */}
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={{
@@ -102,12 +83,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
